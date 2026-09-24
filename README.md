@@ -1,21 +1,50 @@
-# Freshness Classification System
+# Apple Freshness Classification Using Deep Learning
 
-An end-to-end image classification pipeline to detect freshness of produce using deep learning.
+A deep learning-based system for automatically classifying apples as Fresh or Stale using image analysis and the proposed RMS-Net (Reflectance-Moisture Sensitivity Network).
 
 ## Overview
-- Built using RMS-Net architecture with custom physics-aware loss functions
-- Achieved 82.33% classification accuracy
-- Handles 2000+ image datasets efficiently
 
-## Tech Stack
-- Python
-- Docker
-- Linux / Shell Scripting
-- TensorFlow / Keras
+Apple freshness detection is important for food quality monitoring, agricultural supply chains, and reducing post-harvest losses.
 
-## Features
-- Automated deployment workflow using shell scripts
-- Dockerized execution environment for consistency across systems
-- Modular, PEP 8 compliant codebase
+This project uses deep learning and computer vision to classify apple images into two categories:
 
-## Project Structure
+- Fresh
+- Stale
+
+The proposed RMS-Net architecture combines RGB visual features with reflectance-based features through a dual-stream network.
+
+## RMS-Net Architecture
+
+RMS-Net stands for Reflectance-Moisture Sensitivity Network.
+
+The architecture contains two streams:
+
+- RGB Stream – extracts visual features using EfficientNetB0.
+- Reflectance Stream – extracts surface-related features using convolutional layers.
+
+The extracted features are then combined using feature fusion for final classification.
+
+                    Apple Image
+                        │
+                        ▼
+                Image Preprocessing
+                        │
+              ┌─────────┴─────────┐
+              ▼                   ▼
+         RGB Image          Reflectance Map
+              │                   │
+              ▼                   ▼
+        EfficientNetB0           CNN
+              │                   │
+              └─────────┬─────────┘
+                        ▼
+                 Feature Fusion
+                        │
+                        ▼
+                   Dense Layer
+                        │
+                        ▼
+                  Classification
+                   /          \
+                  ▼            ▼
+               Fresh         Stale
